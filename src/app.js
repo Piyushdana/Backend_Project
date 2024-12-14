@@ -14,4 +14,20 @@ app.use(express.static("public"));
 
 
 app.use(cookieParser());
+
+
+
+// Routes Import 
+import userRouter from './routes/user.routes.js'
+
+
+// Routes declaration 
+
+// Here by doing this it will give control to userController where we can define futher router supppse if register route is there then url will be http.../api/v1/users/register, 
+// if login http.../api/v1/users/login this w can make more router in 
+// user control by at  one point user, which we have to declare once
+
+
+app.use('/api/v1/users', userRouter);
+
 export {app} 

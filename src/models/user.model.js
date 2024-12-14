@@ -34,21 +34,15 @@ const userSchema =  new mongoose.Schema({
         type:String, //Cloudnary servis for uploading image from where we will get img link
         required:true,
     },
-
-    coverImg:{
-        type:String
-    },
-
     watchHistory:[
         {
-            type:mongoose.Schema.Types.objectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:'Video'
         }
     ],
 
     coverImg:{
         type:String,
-        required:true
     },
 
     password:{
@@ -64,9 +58,10 @@ const userSchema =  new mongoose.Schema({
 })
 
 
-userSchema.pre('save', async function(next){
-    if(this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password,10)
+userSchema.pre("save", async function(next){
+    if(!this.isModified("password")) return next();
+    
+    this.password = await bcrypt.hash(this.password,10)
     next();
 })
 
